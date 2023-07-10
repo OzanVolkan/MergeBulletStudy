@@ -39,9 +39,14 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < gridSlots.Count; i++)
         {
-            if (gridSlots[i].childCount == 0)
+            Transform currentGrid = gridSlots[i];
+
+            if (currentGrid.childCount == 0 && currentGrid.gameObject.activeInHierarchy)
             {
-                Instantiate(bulletObj, gridSlots[i].transform.position, Quaternion.identity);
+                GameObject newBullet = Instantiate(bulletObj, currentGrid.position, Quaternion.identity, currentGrid);
+                newBullet.transform.localScale = Vector3.one * 4f;
+
+                return;
             }
         }
     }
