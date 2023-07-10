@@ -9,7 +9,9 @@ public enum GameEvent
 
     OnFail,
 
-    OnSave
+    OnSave,
+
+    OnAddBullet
 }
 public static class EventManager
 {
