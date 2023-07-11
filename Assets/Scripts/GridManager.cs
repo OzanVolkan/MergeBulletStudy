@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using DG.Tweening;
 public class GridManager : MonoBehaviour
 {
     [SerializeField] GameData gameData;
-    [SerializeField] GameObject bulletObj;
+    [SerializeField] GameObject bulletObj, gift;
 
     public List<Transform> gridSlots = new List<Transform>();
 
@@ -22,6 +22,7 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         GridControl(gameData.money);
+        AddGift(gift);
     }
 
     private void GridControl(int moneyAmount)
@@ -44,10 +45,32 @@ public class GridManager : MonoBehaviour
             if (currentGrid.childCount == 0 && currentGrid.gameObject.activeInHierarchy)
             {
                 GameObject newBullet = Instantiate(bulletObj, currentGrid.position, Quaternion.identity, currentGrid);
-                newBullet.transform.localScale = Vector3.one * 4f;
+                newBullet.transform.DOScale(Vector3.one * 4f, 0.5f).SetEase(Ease.OutBack);
 
                 return;
             }
         }
+    }
+
+    private void AddGift(GameObject giftObj)
+    {
+        List<Transform> currentSlots = new List<Transform>();
+
+        foreach (var item in gridSlots)
+        {
+            if (item.gameObject.activeInHierarchy) currentSlots.Add(item);
+        }
+
+        int tempIndex = UnityEngine.Random.Range(0, currentSlots.Count);
+
+        if (currentSlots[tempIndex].childCount == 0)
+        {
+            Transform giftGrid = currentSlots[tempIndex];
+            GameObject newGift = Instantiate(giftObj, giftGrid.position, Quaternion.identity, giftGrid);
+            newGift.transform.DOScale(Vector3.one * 4f, 0.5f).SetEase(Ease.OutBack);
+
+            return;
+        } 
+        else AddGift(giftObj);
     }
 }
