@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 7261184566714791646}
   - component: {fileID: 6010954688577042811}
   - component: {fileID: 8399147579019529649}
-  - component: {fileID: 3261473837622413259}
-  m_Layer: 0
+  - component: {fileID: 5118236593735370818}
+  - component: {fileID: -957103476639036912}
+  - component: {fileID: -2601998994410272825}
+  m_Layer: 3
   m_Name: BulletLevel3
   m_TagString: Bullet3
   m_Icon: {fileID: 0}
@@ -82,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3261473837622413259
-CapsuleCollider:
+--- !u!135 &5118236593735370818
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,7 +94,34 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.16969366
-  m_Height: 0.30544722
-  m_Direction: 1
   m_Center: {x: -0.000000014901161, y: 0.15272361, z: 0.024423108}
+--- !u!54 &-957103476639036912
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038705745008864356}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-2601998994410272825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038705745008864356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c9adce42beebc478781dba0988e7d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

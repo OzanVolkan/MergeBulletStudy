@@ -5,7 +5,8 @@ using System;
 public class GameManager : SingletonManager<GameManager>
 {
     public GameData gameData;
-    
+    public List<GameObject> bulletTypes;
+
     private void OnEnable()
     {
         
