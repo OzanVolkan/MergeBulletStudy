@@ -43,6 +43,10 @@ public class UIManager : MonoBehaviour
         EventManager.Broadcast(GameEvent.OnAddBullet);
     }
 
+    public void ShotButton()
+    {
+        EventManager.Broadcast(GameEvent.OnShotPhase);
+    }
     #endregion
 
 }

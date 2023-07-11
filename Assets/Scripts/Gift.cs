@@ -12,6 +12,7 @@ public class Gift : MonoBehaviour
             {
                 int ranInd = Random.Range(0, GameManager.Instance.bulletTypes.Count);
                 GameObject randBullet = Instantiate(GameManager.Instance.bulletTypes[ranInd], transform.position, Quaternion.identity, transform.parent);
+                GameManager.Instance.currentBullets.Add(randBullet);
                 randBullet.transform.DOScale(Vector3.one * 4f, 0.5f).SetEase(Ease.OutBack);
                 Destroy(gameObject);
             }

@@ -49,3 +49,9 @@ MonoBehaviour:
   - {fileID: 7217196242418515382, guid: d8dede03d40bed646a63315a46986807, type: 3}
   - {fileID: 8038705745008864356, guid: 0c4d6c23aa8b8444c971b1343e82ba4a, type: 3}
   - {fileID: 3833694614646719009, guid: feee84a512bd1a846854b56b99093544, type: 3}
+  gunList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

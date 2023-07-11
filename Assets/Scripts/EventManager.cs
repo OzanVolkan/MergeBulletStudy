@@ -11,7 +11,9 @@ public enum GameEvent
 
     OnSave,
 
-    OnAddBullet
+    OnAddBullet,
+
+    OnShotPhase
 }
 public static class EventManager
 {

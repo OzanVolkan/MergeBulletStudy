@@ -45,6 +45,7 @@ public class GridManager : MonoBehaviour
             if (currentGrid.childCount == 0 && currentGrid.gameObject.activeInHierarchy)
             {
                 GameObject newBullet = Instantiate(bulletObj, currentGrid.position, Quaternion.identity, currentGrid);
+                GameManager.Instance.currentBullets.Add(newBullet);
                 newBullet.transform.DOScale(Vector3.one * 4f, 0.5f).SetEase(Ease.OutBack);
 
                 return;
