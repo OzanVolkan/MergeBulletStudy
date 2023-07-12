@@ -10,7 +10,12 @@ public class GameManager : SingletonManager<GameManager>
     public List<GameObject> bulletTypes;
     public List<GameObject> gunList;
     public List<GameObject> currentBullets;
+    public float rate, range;
     public bool isRunnig;
+    public float fireRate = 0.5f; // Ateþ hýzý (saniye cinsinden)
+
+    private float fireTimer = 0f; // Ateþ zamanlayýcýsý
+    private bool isFiring = false; // Ateþ durumu
 
     [Range(0f, 1f)] [SerializeField] float distance, radius;
 
@@ -36,8 +41,40 @@ public class GameManager : SingletonManager<GameManager>
     }
     private void Update()
     {
+        if (isRunnig)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                isFiring = true;
+            }
+            else if (Input.GetButtonUp("Fire1"))
+            {
+                isFiring = false;
+            }
 
+            // Ateþ hýzýný kontrol etme
+            if (isFiring)
+            {
+                fireTimer += Time.deltaTime;
+
+                if (fireTimer >= fireRate)
+                {
+                    Fire();
+                    fireTimer = 0f;
+                }
+            }
+            else
+            {
+                fireTimer = 0f;
+            }
+        }
+        
     }
+    private void Fire()
+    {
+        EventManager.Broadcast(GameEvent.OnShooting, rate);
+    }
+
     IEnumerator ReplaceGuns()
     {
         yield return new WaitForSeconds(5.25f);
@@ -78,7 +115,7 @@ public class GameManager : SingletonManager<GameManager>
         yield return new WaitForSeconds(0.05f);
         foreach (var item in currentBullets)
         {
-            item.transform.localScale = Vector3.one;
+            //item.transform.localScale = Vector3.one;
         }
     }
     #region EVENTS

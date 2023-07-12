@@ -139,8 +139,8 @@ public class Bullet : MonoBehaviour
     {
         canDrag = false;
         listIndex = transform.parent.GetSiblingIndex();
-        transform.SetParent(null);
-        transform.localScale = Vector3.one;
+        //transform.SetParent(null);
+        //transform.localScale = Vector3.one;
         Transform targetGun = GameManager.Instance.gunList[listIndex].transform;
         transform.DOMoveZ(targetGun.position.z, 5f).SetEase(Ease.Linear);
     }

@@ -15,7 +15,9 @@ public enum GameEvent
 
     OnShotPhase,
 
-    OnReplaceGuns
+    OnReplaceGuns,
+
+    OnShooting
 }
 public static class EventManager
 {

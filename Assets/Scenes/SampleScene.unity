@@ -1027,14 +1027,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7748313791168666859, guid: ca0755217bda44347954c0ae4df269ff, type: 3}
-      propertyPath: radius
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748313791168666859, guid: ca0755217bda44347954c0ae4df269ff, type: 3}
-      propertyPath: distance
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7748313791168666859, guid: ca0755217bda44347954c0ae4df269ff, type: 3}
       propertyPath: mergeCam
       value: 
       objectReference: {fileID: 1350998530}
