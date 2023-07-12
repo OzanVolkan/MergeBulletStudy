@@ -11,7 +11,7 @@ public class GameManager : SingletonManager<GameManager>
     public List<GameObject> gunList;
     public List<GameObject> currentBullets;
     public float rate, range;
-    public bool isRunnig;
+    public bool isRunnig, isSingle, isTriple;
     public float fireRate = 0.5f; // Ateþ hýzý (saniye cinsinden)
 
     private float fireTimer = 0f; // Ateþ zamanlayýcýsý
@@ -125,6 +125,7 @@ public class GameManager : SingletonManager<GameManager>
         mergeCam.transform.DOMoveZ(targetTrans.position.z, 5f).SetEase(Ease.Linear);
         StartCoroutine(ReplaceGuns());
         StartCoroutine(SetScales());
+        isSingle = true;
     }
 
     
