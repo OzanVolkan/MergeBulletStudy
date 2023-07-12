@@ -13,7 +13,9 @@ public enum GameEvent
 
     OnAddBullet,
 
-    OnShotPhase
+    OnShotPhase,
+
+    OnReplaceGuns
 }
 public static class EventManager
 {

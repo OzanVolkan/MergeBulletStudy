@@ -11,9 +11,17 @@ public class UIManager : MonoBehaviour
 
     //[SerializeField] GameObject winPanel;
     //[SerializeField] GameObject failPanel;
-    //[SerializeField] GameObject buttonsPanel;
+    [SerializeField] GameObject mergePanel;
     //[SerializeField] GameObject greenBut, blueBut, redBut, hand;
 
+    private void OnEnable()
+    {
+        EventManager.AddHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
+    }
+    private void OnDisable()
+    {
+        EventManager.RemoveHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
+    }
     private void Start()
     {
         //InvokeRepeating("UIChecker", 0f, 0.1f);
@@ -49,4 +57,8 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    public void OnShotPhase()
+    {
+        mergePanel.SetActive(false);
+    }
 }

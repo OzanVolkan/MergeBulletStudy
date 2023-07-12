@@ -10,6 +10,7 @@ TagManager:
   - Bullet3
   - Bullet4
   - Gun
+  - Block
   layers:
   - Default
   - TransparentFX

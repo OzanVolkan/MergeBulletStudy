@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 public class GameManager : SingletonManager<GameManager>
 {
     public GameData gameData;
+    public GameObject mergeCam, runnerCam;
     public List<GameObject> bulletTypes;
     public List<GameObject> gunList;
     public List<GameObject> currentBullets;
+    public bool isRunnig;
+
+    [Range(0f, 1f)] [SerializeField] float distance, radius;
 
     private void OnEnable()
     {
-        
         EventManager.AddHandler(GameEvent.OnSave, new Action(OnSave));
         EventManager.AddHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
-
     }
 
     private void OnDisable()
     {
-        
         EventManager.RemoveHandler(GameEvent.OnSave, new Action(OnSave));
         EventManager.RemoveHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
-
     }
     private void Awake()
     {
@@ -35,60 +36,53 @@ public class GameManager : SingletonManager<GameManager>
     }
     private void Update()
     {
-        
+
     }
-
-    private void OnShotPhase()
+    IEnumerator ReplaceGuns()
     {
-        List<GameObject> side0 = new List<GameObject>();
-        List<GameObject> side1 = new List<GameObject>();
-        List<GameObject> side2 = new List<GameObject>();
-        List<GameObject> side3 = new List<GameObject>();
-        List<GameObject> side4 = new List<GameObject>();
+        yield return new WaitForSeconds(5.25f);
+        for (int i = 0; i < gunList.Count; i++)
+        {
+            if (!gunList[i].GetComponent<Gun>().hasBullet)
+            {
+                GameObject tempGun = gunList[i];
+                Destroy(gunList[i]);
+            }
+        }
+        yield return new WaitForSeconds(0.1f);
+        GameObject[] currentGuns = GameObject.FindGameObjectsWithTag("Gun");
+        yield return new WaitForSeconds(0.1f);
+        ReplaceGuns(currentGuns);
+        mergeCam.SetActive(false);
+        runnerCam.SetActive(true);
+    }
+    public void ReplaceGuns(GameObject[] guns)
+    {
+        if (guns.Length > 0)
+        {
+            for (int i = 0; i < guns.Length; i++)
+            {
+                float x = distance * Mathf.Sqrt(i) * Mathf.Cos(i * radius);
+                float z = distance * Mathf.Sqrt(i) * Mathf.Sin(i * radius);
 
-        for (int i = 0; i < currentBullets.Count; i++)
-        {
-            if (currentBullets[i].GetComponent<Bullet>().listIndex == 0)
-            {
-                side0.Add(currentBullets[i]);
-            }
-            else if (currentBullets[i].GetComponent<Bullet>().listIndex == 1)
-            {
-                side1.Add(currentBullets[i]);
-            }
-            else if (currentBullets[i].GetComponent<Bullet>().listIndex == 2)
-            {
-                side2.Add(currentBullets[i]);
-            }
-            else if (currentBullets[i].GetComponent<Bullet>().listIndex == 3)
-            {
-                side3.Add(currentBullets[i]);
-            }
-            else if (currentBullets[i].GetComponent<Bullet>().listIndex == 4)
-            {
-                side4.Add(currentBullets[i]);
-            }
-        }
+                Vector3 newPos = new Vector3(x, 0.8335806f, z);
 
-        int max0 = side0[0].GetComponent<Bullet>().listIndex;
-        for (int i = 1; i < side0.Count; i++)
-        {
-            if (side0[i].GetComponent<Bullet>().listIndex > max0)
-            {
-                max0 = side0[i].GetComponent<Bullet>().listIndex;
+                guns[i].transform.DOLocalMove(newPos, 1f).SetEase(Ease.OutBack);
             }
         }
-        foreach (var item in side0)
-        {
-            if (item.GetComponent<Bullet>().listIndex != max0)
-            {
-                item.GetComponent<Bullet>().isDestroyable = true;
-            }
-        }
+        isRunnig = true;
     }
 
     #region EVENTS
+    public void OnShotPhase()
+    {
+        Transform targetTrans = gunList[2].transform;
+        mergeCam.transform.DOMoveZ(targetTrans.position.z, 5f).SetEase(Ease.Linear);
+        StartCoroutine(ReplaceGuns());
+        
+    }
 
+    
 
     #endregion
 

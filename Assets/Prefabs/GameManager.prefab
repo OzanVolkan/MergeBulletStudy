@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 225908d8da7093f4ebeefc8706d5ab40, type: 2}
+  mergeCam: {fileID: 0}
   bulletTypes:
   - {fileID: 3903843973364851255, guid: 25bc10376c99fe4419e16074f88ce060, type: 3}
   - {fileID: 7217196242418515382, guid: d8dede03d40bed646a63315a46986807, type: 3}
@@ -55,3 +56,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  currentBullets: []

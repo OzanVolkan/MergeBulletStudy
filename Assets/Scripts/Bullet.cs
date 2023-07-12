@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+
+
 public class Bullet : MonoBehaviour
 {
     public int listIndex;
-    public int verticalIndex;
+    public int bulletLevel;
     public bool isDestroyable;
 
     private Vector3 mousePos;
     private float dragSpeed = 15f;
-    private bool hasDragged;
+    private bool hasDragged, canDrag;
 
     private void OnEnable()
     {
@@ -21,6 +23,29 @@ public class Bullet : MonoBehaviour
     {
         EventManager.RemoveHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
     }
+    private void Start()
+    {
+        canDrag = true;
+        bulletLevel = ExtractLevelFromTag();   
+    }
+    private int ExtractLevelFromTag()
+    {
+        string tag = gameObject.tag;
+        string numberString = "";
+
+        for (int i = 0; i < tag.Length; i++)
+        {
+            if (char.IsDigit(tag[i]))
+            {
+                numberString += tag[i];
+            }
+        }
+
+        int number = 0;
+        int.TryParse(numberString, out number);
+
+        return number;
+    }
     private Vector3 GetMousePos()
     {
         return Camera.main.WorldToScreenPoint(transform.position);
@@ -28,20 +53,34 @@ public class Bullet : MonoBehaviour
 
     private void OnMouseDown()
     {
-        mousePos = Input.mousePosition - GetMousePos();
-        hasDragged = false;
+        if (canDrag)
+        {
+            mousePos = Input.mousePosition - GetMousePos();
+            hasDragged = false;
+        }
     }
 
     private void OnMouseDrag()
     {
+        if(canDrag)
         transform.position = Vector3.Lerp(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePos), Time.deltaTime * dragSpeed);
     }
     private void OnMouseUp()
     {
-        hasDragged = true;
-        Replace();
+        if (canDrag)
+        {
+            hasDragged = true;
+            Replace();
+        }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Block"))
+        {
+            Destroy(other.gameObject);
+        }    
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == tag && hasDragged)
@@ -66,7 +105,7 @@ public class Bullet : MonoBehaviour
                 transform.SetParent(hit.transform);
                 transform.DOLocalMove(Vector3.zero, 0.5f);
             }
-            
+
             else transform.DOLocalMove(Vector3.zero, 0.15f);
         }
     }
@@ -99,11 +138,11 @@ public class Bullet : MonoBehaviour
 
     public void OnShotPhase()
     {
+        canDrag = false;
         listIndex = transform.parent.GetSiblingIndex();
-        verticalIndex = transform.parent.transform.parent.GetSiblingIndex();
         transform.SetParent(null);
+        transform.localScale = Vector3.one;
         Transform targetGun = GameManager.Instance.gunList[listIndex].transform;
-        transform.DOMoveZ(targetGun.position.z, 5f);
-
+        transform.DOMoveZ(targetGun.position.z, 5f).SetEase(Ease.Linear);
     }
 }
