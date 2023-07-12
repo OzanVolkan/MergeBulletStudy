@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
 {
     public int listIndex;
     public int bulletLevel;
-    public bool isDestroyable;
 
     private Vector3 mousePos;
     private float dragSpeed = 15f;

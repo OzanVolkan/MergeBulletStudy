@@ -73,13 +73,21 @@ public class GameManager : SingletonManager<GameManager>
         isRunnig = true;
     }
 
+    IEnumerator SetScales()
+    {
+        yield return new WaitForSeconds(0.05f);
+        foreach (var item in currentBullets)
+        {
+            item.transform.localScale = Vector3.one;
+        }
+    }
     #region EVENTS
     public void OnShotPhase()
     {
         Transform targetTrans = gunList[2].transform;
         mergeCam.transform.DOMoveZ(targetTrans.position.z, 5f).SetEase(Ease.Linear);
         StartCoroutine(ReplaceGuns());
-        
+        StartCoroutine(SetScales());
     }
 
     
