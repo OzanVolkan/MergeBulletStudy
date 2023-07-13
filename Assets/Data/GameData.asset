@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7e30e51b3c60041aff1b0871d4fe70, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  highScore: {x: 0, y: 0, z: 45}
+  levelIndex: 1
   money: 160

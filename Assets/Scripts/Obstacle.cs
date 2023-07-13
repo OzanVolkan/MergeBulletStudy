@@ -7,9 +7,12 @@ public class Obstacle : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !GameManager.Instance.isShield)
+        if (other.CompareTag("Player"))
         {
-            EventManager.Broadcast(GameEvent.OnFail);
+            if (!GameManager.Instance.isShield)
+            {
+                EventManager.Broadcast(GameEvent.OnFail);
+            }
             gameObject.SetActive(false);
         }
     }

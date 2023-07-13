@@ -11,6 +11,8 @@ public enum GameEvent
 
     OnSave,
 
+    OnLoad,
+
     OnAddBullet,
 
     OnShotPhase,
@@ -21,7 +23,9 @@ public enum GameEvent
 
     OnGoldCollect,
 
-    OnShield
+    OnShield,
+
+    OnSaveBullets
 }
 public static class EventManager
 {

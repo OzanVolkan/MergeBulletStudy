@@ -117,7 +117,7 @@ MonoBehaviour:
   - {fileID: 5429979626436058713, guid: 476b415d0652d0b4ab961180cc5f0f80, type: 3}
   - {fileID: 3864854934033295759, guid: f3dccf1d2c1411d4ebe3e03b68777f7f, type: 3}
   - {fileID: 8901695939805693134, guid: 514398ffb3b4fe4499ca61ebf123410d, type: 3}
-  bulletSpeed: 5
+  bulletSpeed: 4
 --- !u!114 &-3073777156023703497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   - {fileID: 8038705745008864356, guid: 0c4d6c23aa8b8444c971b1343e82ba4a, type: 3}
   - {fileID: 3833694614646719009, guid: feee84a512bd1a846854b56b99093544, type: 3}
   pooledObjects: []
-  amountToPool: 150
+  amountToPool: 250
 --- !u!1 &8499295474673302994
 GameObject:
   m_ObjectHideFlags: 0

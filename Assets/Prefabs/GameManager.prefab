@@ -61,6 +61,13 @@ MonoBehaviour:
   rate: 1
   range: 3
   isRunnig: 0
+  isSingle: 0
+  isTriple: 0
+  isSizeUp: 0
+  isShield: 0
   fireRate: 0.5
   distance: 0.25
   radius: 0.25
+  missilePrefab: {fileID: 6491777537718851297, guid: f0e3b28e49a478643af05503bddf8da9, type: 3}
+  shieldParticle: {fileID: 0}
+  scoreFlag: {fileID: 7290128182536763723, guid: 79aa3f0ba8c7d184baf9bed6d212a51f, type: 3}

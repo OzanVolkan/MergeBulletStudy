@@ -40,9 +40,9 @@ public class Gun : MonoBehaviour
             spawnBul.transform.SetParent(null);
 
             if(!GameManager.Instance.isSizeUp)
-            spawnBul.transform.localScale = Vector3.one * 0.25f;
+            spawnBul.transform.localScale = Vector3.one * 0.5f;
 
-            else spawnBul.transform.localScale = Vector3.one * 0.5f;
+            else spawnBul.transform.localScale = Vector3.one * 0.75f;
 
             spawnBul.transform.rotation = Quaternion.Euler(Vector3.zero);
             spawnBul.transform.position = transform.position;
@@ -57,9 +57,9 @@ public class Gun : MonoBehaviour
             spawnBul1.transform.SetParent(null);
 
             if (!GameManager.Instance.isSizeUp)
-                spawnBul1.transform.localScale = Vector3.one * 0.25f;
+                spawnBul1.transform.localScale = Vector3.one * 0.5f;
 
-            else spawnBul1.transform.localScale = Vector3.one * 0.5f;
+            else spawnBul1.transform.localScale = Vector3.one * 0.75f;
 
             spawnBul1.transform.rotation = Quaternion.Euler(Vector3.zero);
             spawnBul1.transform.position = transform.position;
@@ -72,9 +72,9 @@ public class Gun : MonoBehaviour
             spawnBul2.transform.SetParent(null);
 
             if (!GameManager.Instance.isSizeUp)
-                spawnBul2.transform.localScale = Vector3.one * 0.25f;
+                spawnBul2.transform.localScale = Vector3.one * 0.5f;
 
-            else spawnBul2.transform.localScale = Vector3.one * 0.5f;
+            else spawnBul2.transform.localScale = Vector3.one * 0.75f;
 
             spawnBul2.transform.rotation = Quaternion.Euler(Vector3.zero);
             spawnBul2.transform.position = transform.position;
@@ -87,9 +87,9 @@ public class Gun : MonoBehaviour
             spawnBul3.transform.SetParent(null);
 
             if (!GameManager.Instance.isSizeUp)
-                spawnBul3.transform.localScale = Vector3.one * 0.25f;
+                spawnBul3.transform.localScale = Vector3.one * 0.5f;
 
-            else spawnBul3.transform.localScale = Vector3.one * 0.5f;
+            else spawnBul3.transform.localScale = Vector3.one * 0.75f;
 
             spawnBul3.transform.rotation = Quaternion.Euler(Vector3.zero);
             spawnBul3.transform.position = transform.position;

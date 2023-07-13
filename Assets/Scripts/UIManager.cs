@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
-    //public TextMeshProUGUI levelCounter;
+    public TextMeshProUGUI moneyCounter, levelIndexText;
 
     [SerializeField] GameObject mergePanel, winPanel, failPanel;
     //[SerializeField] GameObject greenBut, blueBut, redBut, hand;
@@ -26,27 +26,33 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        //InvokeRepeating("UIChecker", 0f, 0.1f);
+        InvokeRepeating("UIChecker", 0f, 0.1f);
     }
 
     private void UIChecker()
     {
-        //levelCounter.text = "Level " + GameManager.Instance.gameData.levelCounter;
+        if(levelIndexText.transform.gameObject.activeSelf) levelIndexText.text = "Level " + GameManager.Instance.gameData.levelIndex;
+        moneyCounter.text = GameManager.Instance.gameData.money.ToString();
     }
 
     #region BUTTONS
-    
-    //public void NextButton()
-    //{
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    //    EventManager.Broadcast(GameEvent.OnNext);
-    //    EventManager.Broadcast(GameEvent.OnSave);
-    //}
 
-    //public void RefreshButton()
-    //{
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    //}
+    public void NextButton()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        EventManager.Broadcast(GameEvent.OnNext);
+        EventManager.Broadcast(GameEvent.OnSave);
+    }
+
+    public void RetryButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void AddButton()
     {

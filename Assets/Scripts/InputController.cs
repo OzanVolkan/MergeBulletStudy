@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System;
 public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [SerializeField] private Transform playerTrans;
@@ -12,9 +12,13 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private bool canMove;
     private void OnEnable()
     {
+        EventManager.AddHandler(GameEvent.OnWin, new Action(OnWin));
+        EventManager.AddHandler(GameEvent.OnFail, new Action(OnFail));
     }
     private void OnDisable()
     {
+        EventManager.RemoveHandler(GameEvent.OnWin, new Action(OnWin));
+        EventManager.RemoveHandler(GameEvent.OnFail, new Action(OnFail));
     }
 
     private void Update()
@@ -36,7 +40,6 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         }
         
     }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if(GameManager.Instance.isRunnig) canMove = true;
@@ -44,5 +47,13 @@ public class InputController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public void OnPointerUp(PointerEventData eventData)
     {
         if(GameManager.Instance.isRunnig) canMove = false;
+    }
+    public void OnWin()
+    {
+        canMove = false;
+    }
+    public void OnFail()
+    {
+        canMove = false;
     }
 }

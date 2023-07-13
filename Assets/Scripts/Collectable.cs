@@ -20,9 +20,13 @@ public class Collectable : MonoBehaviour
             {
                 case CollectableType.Gold:
                     EventManager.Broadcast(GameEvent.OnGoldCollect);
+                    transform.GetChild(1).gameObject.SetActive(true);
+                    transform.GetChild(1).transform.SetParent(null);
+                    gameObject.SetActive(false);
                     break;
                 case CollectableType.Shield:
                     EventManager.Broadcast(GameEvent.OnShield);
+                    gameObject.SetActive(false);
                     break;
             }
         }

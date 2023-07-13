@@ -19,29 +19,38 @@ public class GameManager : SingletonManager<GameManager>
     private bool isFiring = false; // Ateþ durumu
 
     [Range(0f, 1f)] [SerializeField] float distance, radius;
-    [SerializeField] GameObject missilePrefab;
+    [SerializeField] GameObject missilePrefab, shieldParticle, scoreFlag;
 
     private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnSave, new Action(OnSave));
+        EventManager.AddHandler(GameEvent.OnLoad, new Action(OnLoad));
         EventManager.AddHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
         EventManager.AddHandler(GameEvent.OnShield, new Action(OnShield));
+        EventManager.AddHandler(GameEvent.OnGoldCollect, new Action(OnGoldCollect));
+        EventManager.AddHandler(GameEvent.OnWin, new Action(OnWin));
+        EventManager.AddHandler(GameEvent.OnFail, new Action(OnFail));
+        EventManager.AddHandler(GameEvent.OnNext, new Action(OnNext));
     }
 
     private void OnDisable()
     {
         EventManager.RemoveHandler(GameEvent.OnSave, new Action(OnSave));
+        EventManager.RemoveHandler(GameEvent.OnLoad, new Action(OnLoad));
         EventManager.RemoveHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
         EventManager.RemoveHandler(GameEvent.OnShield, new Action(OnShield));
+        EventManager.RemoveHandler(GameEvent.OnGoldCollect, new Action(OnGoldCollect));
+        EventManager.RemoveHandler(GameEvent.OnWin, new Action(OnWin));
+        EventManager.RemoveHandler(GameEvent.OnFail, new Action(OnFail));
+        EventManager.RemoveHandler(GameEvent.OnNext, new Action(OnNext));
     }
     private void Awake()
     {
-        //OnLoad();
+        OnLoad();
     }
     private void Start()
     {
-
-
+        SetScoreFlag();
     }
     private void Update()
     {
@@ -116,27 +125,41 @@ public class GameManager : SingletonManager<GameManager>
     }
     IEnumerator MissileLaunch()
     {
-        Transform spawnTrans = GameObject.Find("FinishLine").transform;
-        Transform targetTrans = GameObject.Find("StartLine").transform;
-        float randX = targetTrans.position.x + UnityEngine.Random.Range(-1f, 1f);
-        float randY = targetTrans.position.y + UnityEngine.Random.Range(0.15f, 0.4f);
-        Vector3 spawnPos = new Vector3(randX, randY, spawnTrans.position.z);
-        GameObject newMissile = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
-        newMissile.transform.DOMoveZ(targetTrans.position.z, missileSpeed).SetEase(Ease.Linear).OnComplete(() =>
+        if (isRunnig)
         {
-            Destroy(newMissile);
-        });
-        float randomInterval = UnityEngine.Random.Range(3f, 6f);
+            Transform spawnTrans = GameObject.Find("FinishLine").transform;
+            Transform targetTrans = GameObject.Find("StartLine").transform;
+            float randX = targetTrans.position.x + UnityEngine.Random.Range(-1f, 1f);
+            float randY = targetTrans.position.y + UnityEngine.Random.Range(0.15f, 0.4f);
+            Vector3 spawnPos = new Vector3(randX, randY, spawnTrans.position.z);
+            GameObject newMissile = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
+            newMissile.transform.DOMoveZ(targetTrans.position.z, missileSpeed).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                Destroy(newMissile);
+            });
+            float randomInterval = UnityEngine.Random.Range(3f, 6f);
 
-        yield return new WaitForSeconds(randomInterval);
-        StartCoroutine(MissileLaunch());
+            yield return new WaitForSeconds(randomInterval);
+            StartCoroutine(MissileLaunch());
+        }
     }
 
     IEnumerator ShieldProtection()
     {
         isShield = true;
+        shieldParticle.SetActive(true);
         yield return new WaitForSeconds(shieldTime);
+        shieldParticle.SetActive(false);
         isShield = false;
+    }
+
+    public void SetScoreFlag()
+    {
+        if (gameData.levelIndex > 0)
+        {
+            Vector3 flagPos = new Vector3(-1.40f, 0.25f, gameData.highScore.z);
+            Instantiate(scoreFlag, flagPos, Quaternion.identity);
+        }
     }
 
     #region EVENTS
@@ -152,11 +175,32 @@ public class GameManager : SingletonManager<GameManager>
     {
         StartCoroutine(ShieldProtection());
     }
+    public void OnGoldCollect()
+    {
+        gameData.Money += 50;
+    }
 
+    public void OnWin()
+    {
+        isRunnig = false;
+        gameData.levelIndex++;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        gameData.highScore = player.transform.position;
+    }
+
+    public void OnFail()
+    {
+        isRunnig = false;
+    }
+    public void OnNext()
+    {
+        gameData.levelIndex++;
+    }
     #endregion
 
     void OnSave()
     {
+        EventManager.Broadcast(GameEvent.OnSaveBullets);
         SaveManager.SaveData(gameData);
     }
 
