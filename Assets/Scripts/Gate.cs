@@ -94,12 +94,14 @@ public class Gate : MonoBehaviour
                 {
                     GameManager.Instance.isSingle = false;
                     GameManager.Instance.isTriple = true;
+                    gameObject.SetActive(false);
                 }
                 break;
             case GateType.SizeUp:
                 if (other.CompareTag("Player"))
                 {
                     GameManager.Instance.isSizeUp = true;
+                    gameObject.SetActive(false);
                 }
                 break;
         }

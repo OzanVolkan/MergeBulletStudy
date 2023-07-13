@@ -17,7 +17,11 @@ public enum GameEvent
 
     OnReplaceGuns,
 
-    OnShooting
+    OnShooting,
+
+    OnGoldCollect,
+
+    OnShield
 }
 public static class EventManager
 {
