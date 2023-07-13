@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  gateText: {fileID: 0}
+  gateText: {fileID: 7002108061895623248}
   gateVal: 0
   gateMaterials:
   - {fileID: 2100000, guid: a461e1d410aa9d047ac7ab98f32904c3, type: 2}

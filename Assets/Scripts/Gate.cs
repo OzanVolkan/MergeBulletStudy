@@ -16,7 +16,7 @@ public class Gate : MonoBehaviour
 {
     public GateType type;
     public TextMeshPro gateText;
-    public int gateVal;
+    public float gateVal;
 
     [SerializeField] private Material[] gateMaterials;
     private MeshRenderer meshRenderer;
@@ -30,9 +30,16 @@ public class Gate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (type == GateType.FireRate)
+        {
+            gateText.text = "Fire Rate\n" + gateVal;
+        }
+        if (type == GateType.Range)
+        {
+            gateText.text = "Range\n" + gateVal;
+        }
     }
-
+    
     private void MaterialSet()
     {
         if (type == GateType.FireRate || type == GateType.Range)
@@ -49,6 +56,52 @@ public class Gate : MonoBehaviour
                 materials[0] = gateMaterials[1];
                 meshRenderer.materials = materials;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (type)
+        {
+            case GateType.FireRate:
+                if (other.CompareTag("ShotBullet"))
+                {
+                    gateVal += 1f;
+                    other.gameObject.SetActive(false);
+                }
+                if (other.CompareTag("Player"))
+                {
+                    float value = gateVal / 1000f;
+                    GameManager.Instance.rate -= value;
+                    gameObject.SetActive(false);
+                }
+                break;
+            case GateType.Range:
+                if (other.CompareTag("ShotBullet"))
+                {
+                    gateVal += 1f;
+                    other.gameObject.SetActive(false);
+                }
+                if (other.CompareTag("Player"))
+                {
+                    float value = gateVal / 500f;
+                    GameManager.Instance.range += value;
+                    gameObject.SetActive(false);
+                }
+                break;
+            case GateType.TripleShot:
+                if (other.CompareTag("Player"))
+                {
+                    GameManager.Instance.isSingle = false;
+                    GameManager.Instance.isTriple = true;
+                }
+                break;
+            case GateType.SizeUp:
+                if (other.CompareTag("Player"))
+                {
+                    GameManager.Instance.isSizeUp = true;
+                }
+                break;
         }
     }
 }

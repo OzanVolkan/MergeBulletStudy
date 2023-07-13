@@ -9,18 +9,20 @@ public class UIManager : MonoBehaviour
 {
     //public TextMeshProUGUI levelCounter;
 
-    //[SerializeField] GameObject winPanel;
-    //[SerializeField] GameObject failPanel;
-    [SerializeField] GameObject mergePanel;
+    [SerializeField] GameObject mergePanel, winPanel, failPanel;
     //[SerializeField] GameObject greenBut, blueBut, redBut, hand;
 
     private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
+        EventManager.AddHandler(GameEvent.OnWin, new Action(OnWin));
+        EventManager.AddHandler(GameEvent.OnFail, new Action(OnFail));
     }
     private void OnDisable()
     {
         EventManager.RemoveHandler(GameEvent.OnShotPhase, new Action(OnShotPhase));
+        EventManager.RemoveHandler(GameEvent.OnWin, new Action(OnWin));
+        EventManager.RemoveHandler(GameEvent.OnFail, new Action(OnFail));
     }
     private void Start()
     {
@@ -57,8 +59,20 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    #region EVENTS
     public void OnShotPhase()
     {
         mergePanel.SetActive(false);
     }
+
+    public void OnWin()
+    {
+        winPanel.SetActive(true);
+    }
+
+    public void OnFail()
+    {
+        failPanel.SetActive(true);
+    }
+    #endregion
 }

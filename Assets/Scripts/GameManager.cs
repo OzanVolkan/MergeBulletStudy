@@ -11,7 +11,7 @@ public class GameManager : SingletonManager<GameManager>
     public List<GameObject> gunList;
     public List<GameObject> currentBullets;
     public float rate, range;
-    public bool isRunnig, isSingle, isTriple;
+    public bool isRunnig, isSingle, isTriple, isSizeUp;
     public float fireRate = 0.5f; // Ateþ hýzý (saniye cinsinden)
 
     private float fireTimer = 0f; // Ateþ zamanlayýcýsý
@@ -68,7 +68,7 @@ public class GameManager : SingletonManager<GameManager>
                 fireTimer = 0f;
             }
         }
-        
+
     }
     private void Fire()
     {
@@ -128,7 +128,7 @@ public class GameManager : SingletonManager<GameManager>
         isSingle = true;
     }
 
-    
+
 
     #endregion
 
